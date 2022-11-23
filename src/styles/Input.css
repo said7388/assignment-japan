@@ -1,0 +1,27 @@
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.input-container input {
+  width: 100%;
+  height: 32px;
+  border-radius: 5px;
+  padding: 4px 10px;
+  border-width: 1px;
+  font-size: 16px;
+}
+
+.input-container label {
+  text-align: left;
+  padding: 10px 0;
+}
+
+.input-container .pre-input {
+  position: absolute;
+  top: 50px;
+  left: 5px;
+}
