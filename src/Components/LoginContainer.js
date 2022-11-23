@@ -6,7 +6,6 @@ import { useSetRecoilState } from 'recoil';
 import { clientDataState, topTitleState } from '../helper/atoms';
 import BodyLayout from '../Layout/BodyLayout';
 import Input from '../Layout/Input';
-import '../styles/Login.css';
 
 
 const LoginContainer = () => {
@@ -49,10 +48,10 @@ const LoginContainer = () => {
         <Input type="password" register={register} title="Password" name="password" defaultValue={password || ""} />
         {
           errorMessage &&
-          <p className="error-message">{errorMessage}</p>
+          <p className="pt-3 text-red-500">{errorMessage}</p>
         }
-        <div className="button-container">
-          <button type="submit" className="submit-btn">Login</button>
+        <div className="flex mt-8 justify-end ">
+          <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center">Login</button>
         </div>
       </form>
     </BodyLayout>

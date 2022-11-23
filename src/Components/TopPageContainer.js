@@ -5,7 +5,6 @@ import { useSetRecoilState } from 'recoil';
 import { topTitleState } from '../helper/atoms';
 import BodyLayout from '../Layout/BodyLayout';
 import Input from '../Layout/Input';
-import '../styles/TopPage.css';
 
 const TopPageContainer = () => {
   const setTitleState = useSetRecoilState(topTitleState);
@@ -26,15 +25,15 @@ const TopPageContainer = () => {
 
   return (
     <BodyLayout>
-      <div className="top-page-content">
-        <div className="new-reservation">
-          <button className="new-reservation-btn"
+      <div>
+        <div className="flex justify-center">
+          <button className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center"
             onClick={handleMakeReservations}>Make new reservation</button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input type="text" register={register} title="Reservation ID" name="search" />
           <div className="button-container">
-            <button type="submit" className="submit-btn">Search</button>
+            <button type="submit" className="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center">Search</button>
           </div>
         </form>
       </div>
