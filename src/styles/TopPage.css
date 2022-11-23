@@ -1,24 +1,18 @@
-.button-container {
+.new-reservation {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 32px;
+  justify-content: center;
 }
 
-.submit-btn {
-  margin: 32px 0;
+.new-reservation-btn {
+  margin: 24px 0;
   padding: 5px 16px;
   border-radius: 3px;
   border-width: 1px;
   font-size: 16px;
 }
 
-.submit-btn:hover {
+.new-reservation-btn:hover {
   background-color: black;
   color: white;
   transition: all 0.6s ease;
-}
-
-.error-message {
-  padding-top: 10px;
-  color: red;
 }

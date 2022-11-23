@@ -7,4 +7,5 @@
   align-items: center;
   justify-content: center;
   position: sticky;
+  box-shadow: 1px 1px;
 }

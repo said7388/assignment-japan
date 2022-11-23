@@ -1,5 +1,6 @@
 import secureLocalStorage from 'react-secure-storage';
 import { atom } from 'recoil';
+import { CLIENT_DATA } from './variables';
 
 const localStorageEffect = key => ({ setSelf, onSet }) => {
   const savedValue = secureLocalStorage.getItem(key)
@@ -8,21 +9,24 @@ const localStorageEffect = key => ({ setSelf, onSet }) => {
   }
 
   onSet((newValue, _, isReset) => {
-    console.log(newValue)
     isReset
       ? secureLocalStorage.removeItem(key)
       : secureLocalStorage.setItem(key, JSON.stringify(newValue));
   });
 };
 
-export const formState = atom({
+export const clientDataState = atom({
   key: 'formState',
-  default: 'Form',
+  default: {
+  },
+  effects: [
+    localStorageEffect(CLIENT_DATA),
+  ]
 });
 
 export const topTitleState = atom({
   key: 'topTitleState',
-  default: 'Login',
+  default: '',
   effects: [
     localStorageEffect('top_title'),
   ]
