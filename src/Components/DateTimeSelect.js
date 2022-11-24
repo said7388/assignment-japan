@@ -7,14 +7,16 @@ import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
 import { clientDataState, topTitleState } from '../utils/atoms';
+import { destination } from '../utils/data';
 import { japaniLocalization } from '../utils/timeFormate';
 
 
 const DateTimeSelect = () => {
+  const { loginTime, toDestination, fromDestination, personalInfoTime, destinationEnterTime } = useRecoilValue(clientDataState);
   const [startTime, setStartTime] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
+  const setClientDataState = useSetRecoilState(clientDataState);
   const setTitleState = useSetRecoilState(topTitleState);
-  const { loginTime, toDestination, fromDestination, personalInfoTime, destinationEnterTime } = useRecoilValue(clientDataState);
   const navigate = useNavigate();
   const intl = useIntl()
 
@@ -30,6 +32,8 @@ const DateTimeSelect = () => {
     }))
   )
 
+  const fromCityName = destination.find(c => c.id === fromDestination)
+  const toCityName = destination.find(c => c.id === toDestination)
 
   const jpLoginTime = timeFormatter(loginTime)
 
@@ -37,14 +41,24 @@ const DateTimeSelect = () => {
 
   const jpFromToEnterTime = timeFormatter(destinationEnterTime)
 
-  const handleTimeChange = (time) => {
-    console.log(time)
-    setStartTime(time);
+
+  const handleSubmitDateTime = () => {
+    const time = new Date().toISOString();
+
+    setClientDataState((prev) => {
+      const newValue = JSON.parse(JSON.stringify(prev));
+      newValue.dateTimeEnterTime = time;
+      newValue.clientTime = startTime;
+      newValue.clientDate = startDate;
+      return newValue;
+    })
+
+    navigate("/enter-amount");
   }
 
   useEffect(() => {
-    setTitleState(`${fromDestination} > ${toDestination} : Date Time Selection`)
-  }, [setTitleState, toDestination, fromDestination]);
+    setTitleState(`${fromCityName.name} > ${toCityName.name} : Date Time Selection`)
+  }, [setTitleState, toCityName, fromCityName]);
 
   return (
     <BodyLayout>
@@ -79,7 +93,7 @@ const DateTimeSelect = () => {
         <h3 className="text-base font-medium uppercase pb-4">Time</h3>
         <DatePicker
           selected={startTime}
-          onChange={handleTimeChange}
+          onChange={(time) => setStartTime(time)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}
@@ -91,7 +105,7 @@ const DateTimeSelect = () => {
       </div>
       <div className="w-full flex justify-between mt-8">
         <Button onClick={() => navigate('/destination-select')} title="Back" />
-        <Button title="Next" />
+        <Button onClick={handleSubmitDateTime} title="Next" />
       </div>
     </BodyLayout>
   );

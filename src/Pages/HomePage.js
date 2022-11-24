@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div className="App">
       <Header />
-      <div className="body-section">
+      <div className="w-full overflow-auto mx-auto">
         <Outlet />
       </div>
     </div>

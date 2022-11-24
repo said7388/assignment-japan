@@ -12,7 +12,7 @@ import { japaniLocalization } from '../utils/timeFormate';
 const PersonalInfo = () => {
   const setTitleState = useSetRecoilState(topTitleState);
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { loginTime } = useRecoilValue(clientDataState);
+  const { loginTime, clientName, clientGender } = useRecoilValue(clientDataState);
   const setClientDataState = useSetRecoilState(clientDataState);
   const navigate = useNavigate();
   const intl = useIntl()
@@ -59,6 +59,7 @@ const PersonalInfo = () => {
           register={register}
           title="Name"
           name="name"
+          defaultValue={clientName || ""}
           errors={errors}
           required={true}
         />
