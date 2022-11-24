@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { clientDataState, topTitleState } from '../helper/atoms';
-import { japaniLocalization } from '../helper/timeFormate';
-import BodyLayout from '../Layout/BodyLayout';
-import Input from '../Layout/Input';
+import BodyLayout from '../Helper/BodyLayout';
+import Button from '../Helper/Button';
+import Input from '../Helper/Input';
+import { clientDataState, topTitleState } from '../utils/atoms';
+import { japaniLocalization } from '../utils/timeFormate';
 
 const PersonalInfo = () => {
   const setTitleState = useSetRecoilState(topTitleState);
-  const [errorMessage, setErrorMessage] = useState("");
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { loginTime } = useRecoilValue(clientDataState);
+  const setClientDataState = useSetRecoilState(clientDataState);
+  const navigate = useNavigate();
   const intl = useIntl()
 
   const loggedinTime = japaniLocalization(intl.formatDate(loginTime, {
@@ -25,8 +28,18 @@ const PersonalInfo = () => {
   }))
 
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = data => {
+    const time = new Date().toISOString();
+
+    setClientDataState((prev) => {
+      const newValue = JSON.parse(JSON.stringify(prev));
+      newValue.personalInfoTime = time;
+      newValue.clientName = data.name;
+      newValue.clientGender = data.gender;
+      return newValue;
+    })
+
+    navigate("/destination-select");
   };
 
   useEffect(() => {
@@ -36,14 +49,38 @@ const PersonalInfo = () => {
   return (
     <BodyLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="text" register={register} name="login_time" value={loggedinTime} title="Login Time" disabled />
-        <Input register={register} title="Name" name="name" />
-        {
-          errorMessage &&
-          <p className="error-message">{errorMessage}</p>
-        }
-        <div className="button-container">
-          <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-8 py-2.5 text-center">Next</button>
+        <Input
+          value={loggedinTime}
+          title="Login Time"
+          disabled
+        />
+
+        <Input
+          register={register}
+          title="Name"
+          name="name"
+          errors={errors}
+          required={true}
+        />
+
+        {errors.name?.type === 'required' && <p role="alert" className="text-red-500">Name is required</p>}
+
+        <p className="text-left text-base font-medium py-5 uppercase">Gender</p>
+        <div className="ml-6">
+          <Input
+            type="radio"
+            register={register}
+            title="Male"
+            name="gender" />
+          <Input
+            type="radio"
+            register={register}
+            title="Female"
+            name="gender" />
+        </div>
+
+        <div className="w-full flex justify-end mt-8">
+          <Button title="Next" />
         </div>
       </form>
     </BodyLayout>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { topTitleState } from '../helper/atoms';
+import { topTitleState } from '../utils/atoms';
 
 const Header = () => {
   const title = useRecoilValue(topTitleState);
