@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { clientDataState } from '../store/atoms';
-import { destination } from '../utils/data';
 
 const Header = () => {
   const { clientName, fromDestination, toDestination } = useRecoilValue(clientDataState);
   const [headerTitle, setHeaderTitle] = useState('');
   const location = useLocation();
 
-  const fromCityName = destination.find(c => c.id === fromDestination)
-  const toCityName = destination.find(c => c.id === toDestination)
 
   const pathname = location.pathname;
 
@@ -29,7 +26,7 @@ const Header = () => {
         setHeaderTitle(`${clientName} : From to Selection`);
         break;
       case "/date-time-select":
-        setHeaderTitle(`${fromCityName?.name} > ${toCityName?.name} : Date Time Selection`);
+        setHeaderTitle(`${fromDestination?.name} > ${toDestination?.name} : Date Time Selection`);
         break;
       case "/enter-amount":
         setHeaderTitle(`${clientName} : How much do you pay ?`);
@@ -37,10 +34,18 @@ const Header = () => {
       case "/final-confirm":
         setHeaderTitle(`${clientName} : Final Confirmation`);
         break;
+      case "/error":
+        setHeaderTitle("Error!!");
+        break;
+      case "/success":
+        setHeaderTitle(`${clientName} : Reservation ID`);
+        break;
       default:
         setHeaderTitle('Login')
     }
-  }, [clientName, fromCityName?.name, pathname, setHeaderTitle, toCityName?.name]);
+  },
+    [clientName, fromDestination, pathname, setHeaderTitle, toDestination]
+  );
 
   return (
     <div className="w-full h-20 bg-[#deeaf6] flex items-center justify-center sticky shadow-md ">

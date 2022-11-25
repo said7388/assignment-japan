@@ -17,8 +17,7 @@ const localStorageEffect = key => ({ setSelf, onSet }) => {
 
 export const clientDataState = atom({
   key: 'formState',
-  default: {
-  },
+  default: {},
   effects: [
     localStorageEffect(CLIENT_DATA),
   ]

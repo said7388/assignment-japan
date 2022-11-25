@@ -24,7 +24,7 @@ const LoginContainer = () => {
       return;
     }
 
-    const time = new Date().toISOString();
+    const time = new Date().toUTCString();
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
@@ -36,8 +36,9 @@ const LoginContainer = () => {
   };
 
   useEffect(() => {
-    secureLocalStorage.clear()
-  }, []);
+    secureLocalStorage.clear();
+    setClientDataState({})
+  }, [setClientDataState]);
 
   return (
     <BodyLayout>

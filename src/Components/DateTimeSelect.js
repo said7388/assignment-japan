@@ -39,7 +39,7 @@ const DateTimeSelect = () => {
 
 
   const handleSubmitDateTime = () => {
-    const time = new Date().toISOString();
+    const time = new Date().toUTCString();
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));

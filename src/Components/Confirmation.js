@@ -5,7 +5,6 @@ import { useRecoilValue } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import { clientDataState } from '../store/atoms';
-import { destination } from '../utils/data';
 import { japaniLocalization } from '../utils/timeFormate';
 
 const Confirmation = () => {
@@ -16,9 +15,10 @@ const Confirmation = () => {
 
   const intl = useIntl();
 
+  console.log(toDestination)
 
-  const fromCityName = destination.find(c => c.id === fromDestination)
-  const toCityName = destination.find(c => c.id === toDestination)
+
+
 
 
   const timeFormatter = (time) => (
@@ -80,12 +80,12 @@ const Confirmation = () => {
     {
       title: 'From',
       jpTitle: "から",
-      value: language === "BD" ? fromCityName.name : fromCityName.ja
+      value: language === "BD" ? fromDestination?.name : fromDestination?.ja
     },
     {
       title: 'To',
       jpTitle: "に",
-      value: language === "BD" ? toCityName.name : toCityName.ja
+      value: language === "BD" ? toDestination?.name : toDestination?.ja
     },
     {
       title: 'Date',
@@ -108,7 +108,7 @@ const Confirmation = () => {
     {
       title: "Amount(JPY)",
       jpTitle: "金額(円)",
-      value: clientAmount
+      value: Math.round(clientAmount * 1.47),
     },
   ];
 
@@ -161,7 +161,7 @@ const Confirmation = () => {
 
       <div className="w-full flex justify-between mt-8">
         <Button onClick={() => navigate('/enter-note')} title="Back" />
-        <Button title="Next" />
+        <Button title="Submit" />
       </div>
     </BodyLayout>
   );

@@ -7,7 +7,9 @@ import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
 import { clientDataState } from '../store/atoms';
+import genderData from '../utils/gender.json';
 import { japaniLocalization } from '../utils/timeFormate';
+
 
 const PersonalInfo = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,9 +28,8 @@ const PersonalInfo = () => {
     day: '2-digit'
   }))
 
-
   const onSubmit = data => {
-    const time = new Date().toISOString();
+    const time = new Date().toUTCString();
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
@@ -65,16 +66,16 @@ const PersonalInfo = () => {
 
         <p className="text-left text-base font-medium py-5 uppercase">Gender</p>
         <div className="ml-6">
-          <Input
-            type="radio"
-            register={register}
-            title="Male"
-            name="gender" />
-          <Input
-            type="radio"
-            register={register}
-            title="Female"
-            name="gender" />
+          {
+            genderData.map((data) => (
+              <Input
+              key={data.id}
+                type="radio"
+                register={register}
+                title={data.title}
+                name="gender" />
+            ))
+          }
         </div>
 
         <div className="w-full flex justify-end mt-8">

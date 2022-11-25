@@ -9,8 +9,10 @@ import DateTimeSelect from './Components/DateTimeSelect';
 import DestinationSelect from './Components/DestinationSelect';
 import EnterAmount from "./Components/EnterAmount";
 import EnterNote from "./Components/EnterNote";
+import ErrorPage from "./Components/ErrorPage";
 import LoginContainer from './Components/LoginContainer';
 import PersonalInfo from './Components/PersonalInfo';
+import SuccessPage from "./Components/SuccessPage";
 import TopPageContainer from './Components/TopPageContainer';
 import HomePage from './Pages/HomePage';
 
@@ -33,6 +35,8 @@ function App() {
               <Route path='/enter-amount' element={<EnterAmount />} />
               <Route path='/enter-note' element={<EnterNote />} />
               <Route path='/final-confirm' element={<Confirmation />} />
+              <Route path='/error' element={<ErrorPage />} />
+              <Route path='/success' element={<SuccessPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

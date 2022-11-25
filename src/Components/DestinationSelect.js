@@ -7,11 +7,11 @@ import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
 import { clientDataState } from '../store/atoms';
-import { destination } from '../utils/data';
+import destination from '../utils/destination.json';
 import { japaniLocalization } from '../utils/timeFormate';
 
 const DestinationSelect = () => {
-  const { loginTime,  personalInfoTime, toDestination, fromDestination } = useRecoilValue(clientDataState);
+  const { loginTime, personalInfoTime, toDestination, fromDestination } = useRecoilValue(clientDataState);
   const [fromCity, setFromCity] = useState(
     destination.filter(d => d.id !== toDestination)
   )
@@ -54,13 +54,15 @@ const DestinationSelect = () => {
 
 
   const onSubmit = (data) => {
-    const time = new Date().toISOString();
+    const time = new Date().toUTCString();
+    const fromDestination = destination.find(c => c.id === data.from);
+    const toDestination = destination.find(c => c.id === data.to);
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
       newValue.destinationEnterTime = time;
-      newValue.toDestination = data.to;
-      newValue.fromDestination = data.from;
+      newValue.toDestination = toDestination;
+      newValue.fromDestination = fromDestination;
       return newValue;
     })
 

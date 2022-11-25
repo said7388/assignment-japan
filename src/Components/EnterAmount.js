@@ -13,9 +13,12 @@ import { japaniLocalization } from '../utils/timeFormate';
 const EnterAmount = () => {
   const [amountValue, setAmountValue] = useState("");
   const setClientDataState = useSetRecoilState(clientDataState);
-  const { loginTime, personalInfoTime, destinationEnterTime, dateTimeEnterTime } = useRecoilValue(clientDataState);
+  const { loginTime, personalInfoTime, destinationEnterTime, dateTimeEnterTime, clientAmount } = useRecoilValue(clientDataState);
+  
   const navigate = useNavigate();
   const intl = useIntl();
+
+  console.log(clientAmount)
 
 
   const timeFormatter = (time) => (
@@ -33,7 +36,7 @@ const EnterAmount = () => {
   const onNextClick = () => {
     console.log(amountValue)
 
-    const time = new Date().toISOString();
+    const time = new Date().toUTCString();
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
@@ -87,7 +90,7 @@ const EnterAmount = () => {
         </h3>
         <span className="absolute top-11 text-xl font-medium left-2">৳</span>
         <NumericFormat
-          defaultValue="0"
+          defaultValue={clientAmount}
           className='py-1.5 rounded-md px-5 text-right w-full'
           allowLeadingZeros={false}
           decimalScale={2}
