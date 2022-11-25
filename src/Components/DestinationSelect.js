@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -6,17 +6,16 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
+import { clientDataState } from '../store/atoms';
 import { destination } from '../utils/data';
 import { japaniLocalization } from '../utils/timeFormate';
 
 const DestinationSelect = () => {
-  const { loginTime, clientName, personalInfoTime, toDestination, fromDestination } = useRecoilValue(clientDataState);
+  const { loginTime,  personalInfoTime, toDestination, fromDestination } = useRecoilValue(clientDataState);
   const [fromCity, setFromCity] = useState(
     destination.filter(d => d.id !== toDestination)
   )
   const [toCity, setToCity] = useState(destination.filter(d => d.id !== fromDestination))
-  const setTitleState = useSetRecoilState(topTitleState);
   const setClientDataState = useSetRecoilState(clientDataState);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -67,10 +66,6 @@ const DestinationSelect = () => {
 
     navigate("/date-time-select");
   };
-
-  useEffect(() => {
-    setTitleState(`${clientName} : From to Selection`)
-  }, [setTitleState, clientName]);
 
   return (
     <BodyLayout>

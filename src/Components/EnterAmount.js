@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router-dom';
@@ -6,15 +6,14 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
+import { clientDataState } from '../store/atoms';
 import { japaniLocalization } from '../utils/timeFormate';
 
 
 const EnterAmount = () => {
   const [amountValue, setAmountValue] = useState("");
   const setClientDataState = useSetRecoilState(clientDataState);
-  const setTitleState = useSetRecoilState(topTitleState);
-  const { loginTime, personalInfoTime, destinationEnterTime, clientName, dateTimeEnterTime } = useRecoilValue(clientDataState);
+  const { loginTime, personalInfoTime, destinationEnterTime, dateTimeEnterTime } = useRecoilValue(clientDataState);
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -53,12 +52,6 @@ const EnterAmount = () => {
   const jpFromToEnterTime = timeFormatter(destinationEnterTime)
 
   const jpDateTimeEnterTime = timeFormatter(dateTimeEnterTime);
-
-
-
-  useEffect(() => {
-    setTitleState(`${clientName} : How much do you pay ?`)
-  }, [setTitleState, clientName]);
 
   return (
     <BodyLayout>

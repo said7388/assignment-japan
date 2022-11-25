@@ -5,13 +5,12 @@ import secureLocalStorage from 'react-secure-storage';
 import { useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
+import { clientDataState } from '../store/atoms';
 
 
 const LoginContainer = () => {
   const { register, formState: { errors }, handleSubmit } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
-  const setTitleState = useSetRecoilState(topTitleState);
   const setClientDataState = useSetRecoilState(clientDataState);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -26,7 +25,7 @@ const LoginContainer = () => {
     }
 
     const time = new Date().toISOString();
-    
+
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
       newValue.loginTime = time;
@@ -37,9 +36,8 @@ const LoginContainer = () => {
   };
 
   useEffect(() => {
-    setTitleState("Login")
     secureLocalStorage.clear()
-  }, [setTitleState]);
+  }, []);
 
   return (
     <BodyLayout>

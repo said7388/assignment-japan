@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +6,12 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
+import { clientDataState } from '../store/atoms';
 import { japaniLocalization } from '../utils/timeFormate';
 
 const PersonalInfo = () => {
-  const setTitleState = useSetRecoilState(topTitleState);
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { loginTime, clientName, clientGender } = useRecoilValue(clientDataState);
+  const { loginTime, clientName } = useRecoilValue(clientDataState);
   const setClientDataState = useSetRecoilState(clientDataState);
   const navigate = useNavigate();
   const intl = useIntl()
@@ -42,9 +41,7 @@ const PersonalInfo = () => {
     navigate("/destination-select");
   };
 
-  useEffect(() => {
-    setTitleState("Personal Information")
-  }, [setTitleState]);
+
 
   return (
     <BodyLayout>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -6,18 +6,17 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
+import { clientDataState } from '../store/atoms';
 import { defaultNote } from '../utils/data';
 import { japaniLocalization } from '../utils/timeFormate';
 
 
 const EnterNote = () => {
-  const setTitleState = useSetRecoilState(topTitleState);
   const setClientDataState = useSetRecoilState(clientDataState);
-  const { loginTime, personalInfoTime, destinationEnterTime, clientName, dateTimeEnterTime, amountEnterTime } = useRecoilValue(clientDataState);
+  const { loginTime, personalInfoTime, destinationEnterTime, dateTimeEnterTime, amountEnterTime } = useRecoilValue(clientDataState);
   const navigate = useNavigate();
   const intl = useIntl();
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
 
   const timeFormatter = (time) => (
@@ -37,7 +36,7 @@ const EnterNote = () => {
 
     setClientDataState((prev) => {
       const newValue = JSON.parse(JSON.stringify(prev));
-      newValue.amountNoteTime = time;
+      newValue.noteEnterTime = time;
       newValue.clientNote = data.note;
       return newValue;
     })
@@ -56,12 +55,6 @@ const EnterNote = () => {
   const jpAmountEnterTime = timeFormatter(amountEnterTime);
 
 
-
-
-
-  useEffect(() => {
-    setTitleState(`${clientName} : Enter Note`)
-  }, [setTitleState, clientName]);
 
   return (
     <BodyLayout>

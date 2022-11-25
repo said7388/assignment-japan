@@ -1,6 +1,6 @@
 import secureLocalStorage from 'react-secure-storage';
 import { atom } from 'recoil';
-import { CLIENT_DATA } from './variables';
+import { CLIENT_DATA } from '../utils/variables';
 
 const localStorageEffect = key => ({ setSelf, onSet }) => {
   const savedValue = secureLocalStorage.getItem(key)
@@ -24,13 +24,6 @@ export const clientDataState = atom({
   ]
 });
 
-export const topTitleState = atom({
-  key: 'topTitleState',
-  default: '',
-  effects: [
-    localStorageEffect('top_title'),
-  ]
-});
 
 
 

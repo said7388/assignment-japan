@@ -21,7 +21,7 @@ function App() {
 
   return (
     <RecoilRoot>
-      <IntlProvider locale="fr" defaultLocale="en">
+      <IntlProvider locale="jp" defaultLocale="en">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />}>

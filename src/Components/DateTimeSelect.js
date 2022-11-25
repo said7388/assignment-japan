@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -6,17 +6,15 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BodyLayout from '../Helper/BodyLayout';
 import Button from '../Helper/Button';
 import Input from '../Helper/Input';
-import { clientDataState, topTitleState } from '../utils/atoms';
-import { destination } from '../utils/data';
+import { clientDataState } from '../store/atoms';
 import { japaniLocalization } from '../utils/timeFormate';
 
 
 const DateTimeSelect = () => {
-  const { loginTime, toDestination, fromDestination, personalInfoTime, destinationEnterTime } = useRecoilValue(clientDataState);
+  const { loginTime, personalInfoTime, destinationEnterTime } = useRecoilValue(clientDataState);
   const [startTime, setStartTime] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const setClientDataState = useSetRecoilState(clientDataState);
-  const setTitleState = useSetRecoilState(topTitleState);
   const navigate = useNavigate();
   const intl = useIntl()
 
@@ -32,8 +30,6 @@ const DateTimeSelect = () => {
     }))
   )
 
-  const fromCityName = destination.find(c => c.id === fromDestination)
-  const toCityName = destination.find(c => c.id === toDestination)
 
   const jpLoginTime = timeFormatter(loginTime)
 
@@ -56,9 +52,6 @@ const DateTimeSelect = () => {
     navigate("/enter-amount");
   }
 
-  useEffect(() => {
-    setTitleState(`${fromCityName.name} > ${toCityName.name} : Date Time Selection`)
-  }, [setTitleState, toCityName, fromCityName]);
 
   return (
     <BodyLayout>
